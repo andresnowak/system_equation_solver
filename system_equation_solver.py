@@ -73,19 +73,11 @@ def create_matrix_operation_order(matrix_size):
 
     for i in range(matrix_size):
         row = []
-        value_to_make_row_order = matrix_size - 2   # because lists start in zero
         for index, j in enumerate(range(matrix_size)):
-            if i == 0:
+            if index == 0:
+                row.append(i)
+            if index != i:
                 row.append(j)
-            elif i == matrix_size - 1:
-                row.append((j - (matrix_size - 1)) * -1)
-            else:
-                if j == matrix_size - 1:
-                    row.append(matrix_size - 1)
-                else:
-                    row.append(value_to_make_row_order)
-
-            value_to_make_row_order -= 1
 
         order_matrix.append(row)
 
