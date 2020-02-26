@@ -4,6 +4,8 @@
 # @Author: Andres Nowak
 # @Date: Tue Feb 25 13:06:15 CST 2020
 
+# This program uses the Gauss-Jordan method
+
 from fractions import Fraction as frac
 
 
