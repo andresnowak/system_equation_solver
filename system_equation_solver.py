@@ -22,7 +22,7 @@ def main():
 
     resolved_matrix = run_through_matrix(matrix_of_equations)
 
-    print_values_of_unknows(resolved_matrix, list_of_letters_of_unknowns)
+    print_values_of_unknowns(resolved_matrix, list_of_letters_of_unknowns)
 
 
 def create_matrix_of_values_of_equations_from_input(size_of_equation):
@@ -49,7 +49,7 @@ def create_matrix_of_values_of_equations_from_input(size_of_equation):
     return matrix_of_equations, list_of_letters_of_unknowns
 
 
-def print_values_of_unknows(matrix, list_of_letters_of_unknowns):
+def print_values_of_unknowns(matrix, list_of_letters_of_unknowns):
     for index, row in enumerate(matrix):
         print(f"{list_of_letters_of_unknowns[index]} = {row[-1]}")
 
