@@ -11,9 +11,9 @@ from fractions import Fraction as frac
 
 def main():
     print("""the equations you write should look like this:\n
-            1x + 2y + 1z = 4\n
-            3x + 0y + 1z = 2\n
-            1x + -1y + 1z = 1\n""")
+			1x + 2y + 1z = 4\n
+			3x + 0y + 1z = 2\n
+			1x + -1y + 1z = 1\n""")
     size_of_equation = int(input(
         "Of how many unknowns is the system of equations: "))
 
@@ -55,17 +55,15 @@ def print_values_of_unknowns(matrix, list_of_letters_of_unknowns):
 
 
 def run_through_matrix(matrix):
-    matrxix_size = len(matrix)
-    order_matrix = create_matrix_operation_order(matrxix_size)
+    matrix_size = len(matrix)
+    order_matrix = create_matrix_operation_order(matrix_size)
 
-    count = 0
-
-    for index_r, row in enumerate(order_matrix):
-        for col in row:
-            if col == index_r:
-                convert_to_1(matrix[col], matrix[col][index_r])
+    for index_c, col in enumerate(order_matrix):
+        for row in col:
+            if row == index_c:
+                convert_to_1(matrix[row], matrix[row][index_c])
             else:
-                convert_to_0(matrix[col], matrix[row[0]], matrix[col][index_r])
+                convert_to_0(matrix[row], matrix[col[0]], matrix[row][index_c])
 
     return matrix
 
@@ -75,10 +73,10 @@ def create_matrix_operation_order(matrix_size):
 
     for i in range(matrix_size):
         row = []
-        for index, j in enumerate(range(matrix_size)):
-            if index == 0:
+        for j in range(matrix_size):
+            if j == 0:
                 row.append(i)
-            if index != i:
+            if j != i:
                 row.append(j)
 
         order_matrix.append(row)
