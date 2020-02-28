@@ -38,11 +38,11 @@ def create_matrix_of_values_of_equations_from_input(size_of_equation):
         for index, value in enumerate(equation):
             if index % 2 == 0:
                 if index != len(equation) - 1:
-                    equation_values.append(int(value[0:-1]))
+                    equation_values.append(float(value[0:-1]))
 
                     list_of_letters_of_unknowns.append(value[-1])
                 else:
-                    equation_values.append(int(value))
+                    equation_values.append(float(value))
 
         matrix_of_equations.append(equation_values)
 
