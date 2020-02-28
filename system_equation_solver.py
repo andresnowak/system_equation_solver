@@ -51,7 +51,7 @@ def create_matrix_of_values_of_equations_from_input(size_of_equation):
 
 def print_values_of_unknowns(matrix, list_of_letters_of_unknowns):
     for index, row in enumerate(matrix):
-        print(f"{list_of_letters_of_unknowns[index]} = {row[-1]}")
+        print(f"{list_of_letters_of_unknowns[index]} = {float(row[-1]):.5f}")
 
 
 def run_through_matrix(matrix):
