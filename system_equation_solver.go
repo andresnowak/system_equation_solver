@@ -116,6 +116,7 @@ func convertTo1(row []float64, value float64) {
 func convertTo0(row []float64, row_to_multiply []float64, value float64) {
 	value *= -1
 
+	// This is for multithreading
 	var wg sync.WaitGroup
 
 	size := len(row)
