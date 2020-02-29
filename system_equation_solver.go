@@ -7,6 +7,7 @@ import (
 	"os"
 	"strconv"
 	"strings"
+	"sync"
 )
 
 func main() {
@@ -58,7 +59,6 @@ func createMatrixOfValuesOfEquationsFromInput(size_of_equation int64) ([][]float
 			}
 		}
 		matrix_of_equations = append(matrix_of_equations, equation_values)
-		fmt.Println(matrix_of_equations)
 	}
 
 	return matrix_of_equations, list_of_letters_of_unknowns
@@ -116,7 +116,17 @@ func convertTo1(row []float64, value float64) {
 func convertTo0(row []float64, row_to_multiply []float64, value float64) {
 	value *= -1
 
-	for index := 0; index < len(row); index++ {
-		row[index] = (row_to_multiply[index] * value) + row[index]
+	var wg sync.WaitGroup
+
+	size := len(row)
+	wg.Add(size)
+
+	for index := 0; index < size; index++ {
+		go func(index int) {
+			defer wg.Done()
+			row[index] = (row_to_multiply[index] * value) + row[index]
+		}(index)
 	}
+
+	wg.Wait()
 }
