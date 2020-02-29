@@ -9,10 +9,6 @@ import (
 	"strings"
 )
 
-func add(x, y int) int {
-	return x + y
-}
-
 func main() {
 	fmt.Printf("the equations you write should look like this:\n1x + 2y + 1z = 4\n3x + 0y + 1z = 2\n1x + -1y + 1z = 1\n")
 
