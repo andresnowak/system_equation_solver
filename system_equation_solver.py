@@ -7,13 +7,14 @@
 # This program uses the Gauss-Jordan method
 
 from fractions import Fraction as frac
+from sys import exit
 
 
 def main():
     print("""the equations you write should look like this:\n
 			1x + 2y + 1z = 4\n
 			3x + 0y + 1z = 2\n
-			1x + -1y + 1z = 1\n""")
+			1x - 1y + 1z = 1\n""")
     size_of_equation = int(input(
         "Of how many unknowns is the system of equations: "))
 
@@ -35,14 +36,20 @@ def create_matrix_of_values_of_equations_from_input(size_of_equation):
 
         equation_values = []
 
+        sign = 1
+
         for index, value in enumerate(equation):
             if index % 2 == 0:
                 if index != len(equation) - 1:
-                    equation_values.append(float(value[0:-1]))
+                    equation_values.append(float(value[0:-1]) * sign)
 
                     list_of_letters_of_unknowns.append(value[-1])
                 else:
                     equation_values.append(float(value))
+            else:
+                if(value != "="):
+                    sign = value + "1"
+                    sign = int(sign)
 
         matrix_of_equations.append(equation_values)
 
@@ -85,10 +92,14 @@ def create_matrix_operation_order(matrix_size):
 
 
 def convert_to_1(row, value):
-    value = frac(value)
-    inverse_of_value = value**-1
-    for index, i in enumerate(row):
-        row[index] = frac(i) * inverse_of_value
+    try:
+        value = frac(value)
+        inverse_of_value = value**-1
+        for index, i in enumerate(row):
+            row[index] = frac(i) * inverse_of_value
+    except ZeroDivisionError:
+        print("This system of equations cant be solved")
+        exit()
 
 
 def convert_to_0(row, row_to_multiply, value):
