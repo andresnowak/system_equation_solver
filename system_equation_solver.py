@@ -14,7 +14,8 @@ def main():
     print("""the equations you write should look like this:\n
 			1x + 2y + 1z = 4\n
 			3x + 0y + 1z = 2\n
-			1x - 1y + 1z = 1\n""")
+			1x - 1y + 1z = 1\n
+            and the result if its negative like this = -4""")
     size_of_equation = int(input(
         "Of how many unknowns is the system of equations: "))
 
