@@ -10,11 +10,10 @@ from gauss_jordan import run_through_matrix
 
 
 def main():
-    print("""the equations you write should look like this:\n
-			1x + 2y + 1z = 4\n
-			3x + 0y + 1z = 2\n
-			1x - 1y + 1z = 1\n
-            and the result if its negative like this = -4""")
+    print("""the equations you write can look like this:\n
+			x + 2y + z = 4\n
+			3x + z = 2\n
+			x-y+z=1\n""")
     size_of_equation = int(input(
         "Of how many unknowns is the system of equations: "))
 
@@ -26,34 +25,79 @@ def main():
     print_values_of_unknowns(resolved_matrix, list_of_letters_of_unknowns)
 
 
-def create_matrix_of_values_of_equations_from_input(size_of_equation):
-    list_of_letters_of_unknowns = []
-    matrix_of_equations = []
+def get_equations_from_input(size_of_equation):
+    equations = []
 
     for i in range(size_of_equation):
         equation = input(f"{i + 1} equation: ")
-        equation = equation.split()
 
-        equation_values = []
+        equations.append(equation)
 
-        sign = 1
+    return equations
 
-        for index, value in enumerate(equation):
-            if index % 2 == 0:
-                if index != len(equation) - 1:
-                    equation_values.append(float(value[0:-1]) * sign)
 
-                    list_of_letters_of_unknowns.append(value[-1])
-                else:
-                    equation_values.append(float(value))
-            else:
-                if(value != "="):
-                    sign = value + "1"
-                    sign = int(sign)
+def create_matrix_of_values_of_equations_from_input(size_of_equation):
+    matrix_of_equations = []
+
+    equations = get_equations_from_input(size_of_equation)
+
+    list_of_letters_of_unknowns = obtain_unknown_values(equations)
+    list_of_letters_of_unknowns = list(list_of_letters_of_unknowns)
+
+    list_of_letters_of_unknowns.sort()
+
+    for equation in equations:
+        equation_values = [0] * (len(list_of_letters_of_unknowns) + 1)
+
+        equation_values = get_equation_values(
+            list_of_letters_of_unknowns, equation_values, equation)
 
         matrix_of_equations.append(equation_values)
 
+    print(matrix_of_equations)
+
     return matrix_of_equations, list_of_letters_of_unknowns
+
+
+def get_equation_values(list_of_letters_of_unknowns, equation_values, equation):
+    signs = set(["+", "-"])
+
+    index = len(list_of_letters_of_unknowns)
+
+    number_value = ""
+
+    if equation[0] not in signs:
+        equation = "+" + equation
+
+    for value in equation[::-1]:
+        if value.lower() in list_of_letters_of_unknowns:
+            index = list_of_letters_of_unknowns.index(value)
+
+            equation_values[index] = 1
+        elif value in signs:
+            equation_values[index] = float(
+                value + number_value[::-1] if number_value else value + str(equation_values[index]))
+
+            number_value = ""
+        elif value == "=" and number_value:
+            equation_values[index] = float(number_value[::-1])
+
+            number_value = ""
+        elif not value.isspace() and value != "=":
+            number_value += value
+
+    return equation_values
+
+
+def obtain_unknown_values(equations):
+    unknown_values = set()
+
+    for equation in equations:
+        for i in equation:
+            if i.isalpha():
+                unknown_values.add(i.lower())
+
+    return unknown_values
 
 
 def print_values_of_unknowns(matrix, list_of_letters_of_unknowns):
